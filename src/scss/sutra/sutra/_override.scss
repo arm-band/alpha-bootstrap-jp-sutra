@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+html[lang=ja] {
+    line-height: 1.15;
+}
+
+.btn {
+    [lang=ja] & {
+        word-break: keep-all;
+    }
+    &-lg {
+        [lang=ja] & {
+            font-size: 1.125rem;
+        }
+    }
+}
