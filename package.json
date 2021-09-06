@@ -1,5 +1,5 @@
 {
-    "name": "@arm-band/alpha-bootstrap-jp-sutra",
+    "name": "@arm-band/alpha1-bootstrap-jp-sutra",
     "version": "0.0.1",
     "description": "Bootstrap 5 で日本語の表示を調整する Scss のスニペットです。",
     "main": "index.js",
