@@ -9,7 +9,7 @@ Bootstrap 5 で日本語の表示を調整する Scss のスニペットです�
 ## Usage
 
 1. `yarn add @arm-band/alpha1-bootstrap-jp-sutra`
-2. `src/scss/global/_index.scss` 等に `@use "node_modules/@arm-band/alpha1-bootstrap-jp-sutra/src/scss/sutra";` と記述
+2. `src/scss/global/_index.scss` 等に `@use "node_modules/@arm-band/alpha1-bootstrap-jp-sutra/src/scss/sutra/sutra";` と記述
 
 ## Reference
 
