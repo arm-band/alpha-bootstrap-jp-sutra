@@ -1,5 +1,10 @@
 @charset "utf-8";
 
+// Variables
+//
+// Variables should follow the `$component-state-property-size` formula for
+// consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
+
 // Color system
 
 // scss-docs-start gray-color-variables
@@ -406,23 +411,33 @@ $body-text-align:           null !default;
 //
 // Extends the default `$theme-colors` maps to help create our utilities.
 
+// Come v6, we'll de-dupe these variables. Until then, for backward compatibility, we keep them to reassign.
 // scss-docs-start utilities-colors
-$utilities-colors: map-merge(
-  $theme-colors-rgb,
-  (
-    "black": to-rgb($black),
-    "white": to-rgb($white),
-    "body":  to-rgb($body-color)
-  )
-) !default;
+$utilities-colors: $theme-colors-rgb !default;
 // scss-docs-end utilities-colors
 
 // scss-docs-start utilities-text-colors
-$utilities-text-colors: map-loop($utilities-colors, rgba-css-var, "$key", "text") !default;
+$utilities-text: map-merge(
+  $utilities-colors,
+  (
+    "black": to-rgb($black),
+    "white": to-rgb($white),
+    "body": to-rgb($body-color)
+  )
+) !default;
+$utilities-text-colors: map-loop($utilities-text, rgba-css-var, "$key", "text") !default;
 // scss-docs-end utilities-text-colors
 
 // scss-docs-start utilities-bg-colors
-$utilities-bg-colors: map-loop($utilities-colors, rgba-css-var, "$key", "bg") !default;
+$utilities-bg: map-merge(
+  $utilities-colors,
+  (
+    "black": to-rgb($black),
+    "white": to-rgb($white),
+    "body": to-rgb($body-bg)
+  )
+) !default;
+$utilities-bg-colors: map-loop($utilities-bg, rgba-css-var, "$key", "bg") !default;
 // scss-docs-end utilities-bg-colors
 
 // Links
@@ -561,10 +576,13 @@ $aspect-ratios: (
 
 // scss-docs-start font-variables
 // stylelint-disable value-keyword-case
+// SUTRA modified
 $font-family-sans-serif:      -apple-system, "BlinkMacSystemFont", "Helvetica Neue", Helvetica, "Arial", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
 $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
 // stylelint-enable value-keyword-case
+// SUTRA modified
 $font-family-serif:           "Times New Roman", Times, "Yu Mincho", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "ＭＳ Ｐ明朝", "MS PMincho", "MS 明朝", serif !default;
+// SUTRA modified
 $font-family-base:            $font-family-sans-serif !default;
 $font-family-code:            var(--#{$variable-prefix}font-monospace) !default;
 
@@ -576,22 +594,31 @@ $font-size-sm:                $font-size-base * .875 !default;
 $font-size-lg:                $font-size-base * 1.25 !default;
 
 $font-weight-lighter:         lighter !default;
+// SUTRA modified
 $font-weight-light:           400 !default;
 $font-weight-normal:          400 !default;
+// SUTRA modified
 $font-weight-bold:            600 !default;
 $font-weight-bolder:          bolder !default;
 
 $font-weight-base:            $font-weight-normal !default;
 
+// SUTRA modified
 $line-height-base:            1.7 !default;
 $line-height-sm:              1.25 !default;
 $line-height-lg:              2 !default;
 
+// SUTRA modified
 $h1-font-size:                $font-size-base * 2.375 !default;
+// SUTRA modified
 $h2-font-size:                $font-size-base * 1.875 !default;
+// SUTRA modified
 $h3-font-size:                $font-size-base * 1.625 !default;
+// SUTRA modified
 $h4-font-size:                $font-size-base * 1.375 !default;
+// SUTRA modified
 $h5-font-size:                $font-size-base * 1.125 !default;
+// SUTRA modified
 $h6-font-size:                $font-size-base *  .875 !default;
 // scss-docs-end font-variables
 
@@ -607,10 +634,15 @@ $font-sizes: (
 // scss-docs-end font-sizes
 
 // scss-docs-start headings-variables
+// SUTRA modified
 $headings-margin-bottom:      $spacer * .625 !default;
+// SUTRA modified
 $headings-font-family:        inherit !default;
+// SUTRA modified
 $headings-font-style:         inherit !default;
+// SUTRA modified
 $headings-font-weight:        $font-weight-bold !default;
+// SUTRA modified
 $headings-line-height:        1.4 !default;
 $headings-color:              null !default;
 // scss-docs-end headings-variables
@@ -625,12 +657,15 @@ $display-font-sizes: (
   6: 2.5rem
 ) !default;
 
+// SUTRA modified
 $display-font-weight: $font-weight-normal !default;
 $display-line-height: $headings-line-height !default;
 // scss-docs-end display-headings
 
 // scss-docs-start type-variables
+// SUTRA modified
 $lead-font-size:              $font-size-base * 1.125 !default;
+// SUTRA modified
 $lead-font-weight:            $font-weight-normal !default;
 
 $small-font-size:             .875em !default;
@@ -642,6 +677,7 @@ $text-muted:                  $gray-600 !default;
 $initialism-font-size:        $small-font-size !default;
 
 $blockquote-margin-y:         $spacer !default;
+// SUTRA modified
 $blockquote-font-size:        $font-size-base !default;
 $blockquote-footer-color:     $gray-600 !default;
 $blockquote-footer-font-size: $small-font-size !default;
@@ -912,7 +948,7 @@ $form-check-inline-margin-end:    1rem !default;
 // scss-docs-end form-check-variables
 
 // scss-docs-start form-switch-variables
-$form-switch-color:               rgba(0, 0, 0, .25) !default;
+$form-switch-color:               rgba($black, .25) !default;
 $form-switch-width:               2em !default;
 $form-switch-padding-start:       $form-switch-width + .5em !default;
 $form-switch-bg-image:            url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$form-switch-color}'/></svg>") !default;
@@ -960,7 +996,7 @@ $form-select-feedback-icon-size:        $input-height-inner-half $input-height-i
 
 $form-select-border-width:        $input-border-width !default;
 $form-select-border-color:        $input-border-color !default;
-$form-select-border-radius:       $border-radius !default;
+$form-select-border-radius:       $input-border-radius !default;
 $form-select-box-shadow:          $box-shadow-inset !default;
 
 $form-select-focus-border-color:  $input-focus-border-color !default;
@@ -970,10 +1006,12 @@ $form-select-focus-box-shadow:    0 0 0 $form-select-focus-width $input-btn-focu
 $form-select-padding-y-sm:        $input-padding-y-sm !default;
 $form-select-padding-x-sm:        $input-padding-x-sm !default;
 $form-select-font-size-sm:        $input-font-size-sm !default;
+$form-select-border-radius-sm:    $input-border-radius-sm !default;
 
 $form-select-padding-y-lg:        $input-padding-y-lg !default;
 $form-select-padding-x-lg:        $input-padding-x-lg !default;
 $form-select-font-size-lg:        $input-font-size-lg !default;
+$form-select-border-radius-lg:    $input-border-radius-lg !default;
 
 $form-select-transition:          $input-transition !default;
 // scss-docs-end form-select-variables
@@ -1092,7 +1130,9 @@ $nav-pills-link-active-bg:          $component-active-bg !default;
 // Navbar
 
 // scss-docs-start navbar-variables
+// SUTRA modified
 $navbar-padding-y:                  $spacer * 1.2 !default;
+// SUTRA modified
 $navbar-padding-x:                  $spacer * 1.5 !default;
 
 $navbar-nav-link-padding-x:         .5rem !default;
@@ -1155,7 +1195,7 @@ $dropdown-divider-margin-y:         $spacer * .5 !default;
 $dropdown-box-shadow:               $box-shadow !default;
 
 $dropdown-link-color:               $gray-900 !default;
-$dropdown-link-hover-color:         shade-color($gray-900, 10%) !default;
+$dropdown-link-hover-color:         shade-color($dropdown-link-color, 10%) !default;
 $dropdown-link-hover-bg:            $gray-200 !default;
 
 $dropdown-link-active-color:        $component-active-color !default;
@@ -1360,14 +1400,14 @@ $toast-font-size:                   .875rem !default;
 $toast-color:                       null !default;
 $toast-background-color:            rgba($white, .85) !default;
 $toast-border-width:                1px !default;
-$toast-border-color:                rgba(0, 0, 0, .1) !default;
+$toast-border-color:                rgba($black, .1) !default;
 $toast-border-radius:               $border-radius !default;
 $toast-box-shadow:                  $box-shadow !default;
 $toast-spacing:                     $container-padding-x !default;
 
 $toast-header-color:                $gray-600 !default;
 $toast-header-background-color:     rgba($white, .85) !default;
-$toast-header-border-color:         rgba(0, 0, 0, .05) !default;
+$toast-header-border-color:         rgba($black, .05) !default;
 // scss-docs-end toast-variables
 
 
